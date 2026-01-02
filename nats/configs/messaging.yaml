@@ -1,0 +1,25 @@
+messaging:
+  provider: nats
+  serviceName: nats://127.0.0.1:4222
+  subscriptions:
+    - name: agent-consumer
+      topic: demo.start-task
+      group: start-task
+      pull: true
+      ackTimeout: 5m
+      endpoint:
+        service: Agent
+        method: start_task
+    - name: agent-stop-tasks-consumer
+      topic: demo.stop-tasks
+      ackTimeout: 1h
+      endpoint:
+        service: Agent
+        method: stop_tasks
+
+  nats:
+    jetStream: demo
+    maxAge: 604800
+    maxMsgs: 1000000
+    topicNames:
+      - demo.*
